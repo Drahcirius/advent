@@ -4,11 +4,12 @@ ids =
 
 ids
 |> Enum.reduce_while(ids, fn id, [_ | rest] ->
-  split_id = String.split(id, "", trim: true)
+  split_id = String.graphemes(id)
 
   found =
     Enum.find(rest, fn val ->
-      String.split(val, "", trim: true)
+      val
+      |> String.graphemes()
       |> Enum.zip(split_id)
       |> Enum.reduce(0, fn {a, b}, acc -> if a == b, do: acc, else: acc + 1 end)
       |> Kernel.==(1)
@@ -21,8 +22,8 @@ ids
   end
 end)
 |> (fn {a, b} ->
-      a_split = a |> String.split("")
-      b_split = b |> String.split("")
+      a_split = a |> String.graphemes()
+      b_split = b |> String.graphemes()
 
       Enum.zip(a_split, b_split)
       |> Enum.filter(fn {char1, char2} -> char1 == char2 end)
