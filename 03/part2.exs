@@ -4,7 +4,8 @@ File.stream!("input.txt")
   Enum.map(nums, &String.to_integer/1)
 end)
 |> Enum.reduce(%{}, fn [id, x, y, width, height], cloth ->
-  for rx <- x..(x + width - 1), ry <- y..(y + height - 1) do
+  for rx <- x..(x + width - 1),
+      ry <- y..(y + height - 1) do
     {rx, ry}
   end
   |> Enum.reduce(cloth, fn coord, cloth_acc ->
