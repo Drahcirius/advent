@@ -4,8 +4,8 @@ File.stream!("input.txt")
   Enum.map(nums, &String.to_integer/1)
 end)
 |> Enum.reduce(%{}, fn [x, y, width, height], cloth ->
-  for n <- 0..(width * height - 1) do
-    {x + rem(n, width), y + trunc(n / width)}
+  for rx <- x..(x + width - 1), ry <- y..(y + height - 1) do
+    {rx, ry}
   end
   |> Enum.reduce(cloth, fn coord, cloth_acc ->
     Map.update(cloth_acc, coord, :placed, fn _ -> :overlap end)
