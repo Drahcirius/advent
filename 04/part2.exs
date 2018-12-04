@@ -1,10 +1,10 @@
 File.stream!("input.txt")
 |> Enum.map(fn line ->
-  [_ | matches] = Regex.run(~r/\[(.+)\] (.+)/, line)
-  matches
+  "[" <> <<date::binary-size(16)>> <> "] " <> text = line
+  {date, String.trim_trailing(text)}
 end)
-|> Enum.sort_by(&List.first/1, &</2)
-|> Enum.reduce({%{}, nil, nil}, fn [time, text], {sleep_ranges, id, timestamp} ->
+|> Enum.sort_by(&elem(&1, 0), &</2)
+|> Enum.reduce({%{}, nil, nil}, fn {time, text}, {sleep_ranges, id, timestamp} ->
   case text do
     "Guard #" <> rest ->
       {id, _} = Integer.parse(rest)
