@@ -26,11 +26,10 @@ defmodule Advent.DayFive do
       |> String.graphemes()
       |> Enum.map(fn <<x::integer>> -> x end)
 
-    Task.async_stream(?A..?Z, fn bin ->
-      casebin = bin ^^^ 32
-
+    Enum.zip(?a..?z, ?A..?Z)
+    |> Task.async_stream(fn {lower, capital} ->
       polymer
-      |> Enum.filter(&(&1 != bin && &1 != casebin))
+      |> Enum.filter(&(&1 != lower && &1 != capital))
       |> parse_polymer([], 0)
       |> length
     end)
