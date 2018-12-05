@@ -26,18 +26,15 @@ defmodule Advent.DayFive do
       |> String.graphemes()
       |> Enum.map(fn <<x::integer>> -> x end)
 
-    for bin <- ?A..?Z do
+    Task.async_stream(?A..?Z, fn bin ->
       casebin = bin ^^^ 32
 
-      len =
-        polymer
-        |> Enum.filter(&(&1 != bin && &1 != casebin))
-        |> parse_polymer([], 0)
-        |> length
-
-      {bin, len}
-    end
-    |> Enum.min_by(fn {_, len} -> len end)
+      polymer
+      |> Enum.filter(&(&1 != bin && &1 != casebin))
+      |> parse_polymer([], 0)
+      |> length
+    end)
+    |> Enum.min_by(fn {:ok, len} -> len end)
     |> elem(1)
   end
 
