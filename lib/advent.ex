@@ -36,8 +36,8 @@ defmodule Advent do
 
         IO.puts("""
         Over #{repeat} iterations
-        Part 1 average: #{Enum.sum(part_ones) / length(part_ones) / 1000}ms
-        Part 2 average: #{Enum.sum(part_twos) / length(part_twos) / 1000}ms
+        Part 1 average: #{div(Enum.sum(part_ones), length(part_ones) * 1000)}ms
+        Part 2 average: #{div(Enum.sum(part_twos), length(part_twos) * 1000)}ms
         """)
       end
     end

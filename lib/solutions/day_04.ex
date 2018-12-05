@@ -96,7 +96,7 @@ defmodule Advent.DayFour do
   """
   def part_two(input) do
     {_, sleep_ranges, _, _} = parse_file(input)
-    
+
     {id, {min, _}} =
       sleep_ranges
       |> Enum.map(fn {k, ranges} ->

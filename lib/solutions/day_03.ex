@@ -23,7 +23,7 @@ defmodule Advent.DayThree do
       nums
     end)
   end
-  
+
   @doc ~S"""
   Doctest
       iex> Advent.DayThree.part_one([
