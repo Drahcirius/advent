@@ -10,8 +10,9 @@ defmodule Advent.DayFive do
   def part_one(input) do
     input
     |> List.first()
-    |> parse_polymer()
-    |> length
+    |> String.graphemes()
+    |> Enum.map(fn <<x::integer>> -> x end)
+    |> get_polymer_length([0])
   end
 
   @doc ~S"""
@@ -30,37 +31,22 @@ defmodule Advent.DayFive do
     |> Task.async_stream(fn {lower, capital} ->
       polymer
       |> Enum.filter(&(&1 != lower && &1 != capital))
-      |> parse_polymer([], 0)
-      |> length
+      |> get_polymer_length([0])
     end)
     |> Enum.min_by(fn {:ok, len} -> len end)
     |> elem(1)
   end
 
-  defp parse_polymer(polymer) do
-    polymer
-    |> String.graphemes()
-    |> Enum.map(fn <<x::integer>> -> x end)
-    |> parse_polymer([], 0)
+  defp get_polymer_length([a], acc) do
+    length([a | acc]) - 1
   end
 
-  defp parse_polymer([a], acc, 0) do
-    [a | acc]
-  end
-
-  defp parse_polymer([], acc, _) do
-    parse_polymer(acc, [], 0)
-  end
-
-  defp parse_polymer([a], acc, _) do
-    parse_polymer([a | acc], [], 0)
-  end
-
-  defp parse_polymer([a, b | t], acc, remove_count) do
+  defp get_polymer_length([a, b | t], acc) do
     if a == b ^^^ 32 do
-      parse_polymer(t, acc, remove_count + 1)
+      [c | acc] = acc
+      get_polymer_length([c | t], acc)
     else
-      parse_polymer([b | t], [a | acc], remove_count)
+      get_polymer_length([b | t], [a | acc])
     end
   end
 end
