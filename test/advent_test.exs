@@ -7,6 +7,8 @@ defmodule AdventTest do
   doctest Advent.DayFour
   doctest Advent.DayFive
   doctest Advent.DaySix
+  doctest Advent.DaySeven
+  doctest Advent.DayEight
 
   @tag :skip
   test "Day 1" do
@@ -48,5 +50,19 @@ defmodule AdventTest do
     file = Advent.DaySix.get_file()
     assert Advent.DaySix.part_one(file) == 3276
     assert Advent.DaySix.part_two(file) == 38380
+  end
+
+  @tag :skip
+  test "Day 7" do
+    file = Advent.DaySeven.get_file()
+    assert Advent.DaySeven.part_one(file) == "OVXCKZBDEHINPFSTJLUYRWGAMQ"
+    # assert Advent.DaySeven.part_two(file) == 38380
+  end
+
+  @tag :skip
+  test "Day 8" do
+    file = Advent.DayEight.get_file()
+    assert Advent.DayEight.part_one(file) == 48155
+    assert Advent.DayEight.part_two(file) == 40292
   end
 end
